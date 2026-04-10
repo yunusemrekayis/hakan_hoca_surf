@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/hakan_hoca_surf/static/css/main.2c1b9661.css",
+    "main.js": "/hakan_hoca_surf/static/js/main.d580290a.js",
+    "static/js/453.349d9291.chunk.js": "/hakan_hoca_surf/static/js/453.349d9291.chunk.js",
+    "index.html": "/hakan_hoca_surf/index.html",
+    "main.2c1b9661.css.map": "/hakan_hoca_surf/static/css/main.2c1b9661.css.map",
+    "main.d580290a.js.map": "/hakan_hoca_surf/static/js/main.d580290a.js.map",
+    "453.349d9291.chunk.js.map": "/hakan_hoca_surf/static/js/453.349d9291.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2c1b9661.css",
+    "static/js/main.d580290a.js"
+  ]
+}
