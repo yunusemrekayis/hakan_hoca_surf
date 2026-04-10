@@ -1,13 +1,250 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+
+/* ===== SNOWBALL SPINNER KEYFRAMES ===== */
+@keyframes ball {
+  from { transform: rotate(0) translateY(-6.5em); }
+  50%  { transform: rotate(180deg) translateY(-6em); }
+  to   { transform: rotate(360deg) translateY(-6.5em); }
+}
+@keyframes ballInnerShadow {
+  from { transform: rotate(0); }
+  to   { transform: rotate(-360deg); }
+}
+@keyframes ballOuterShadow {
+  from { transform: rotate(20deg); }
+  to   { transform: rotate(-340deg); }
+}
+@keyframes ballTexture {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
+}
+@keyframes trackCover {
+  from { transform: rotate(0); }
+  to   { transform: rotate(360deg); }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ===== SNOWBALL SPINNER STYLES ===== */
+:root {
+  --pl-bg: hsl(228,33%,97%);
 }
+
+.pl {
+  position: relative;
+  width: 13em;
+  height: 13em;
+  font-size: 16px;
+}
+
+.pl__outer-ring,
+.pl__inner-ring,
+.pl__track-cover,
+.pl__ball {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+}
+
+/* rings: near-invisible groove in snow */
+.pl__outer-ring {
+  width: 13em;
+  height: 13em;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  box-shadow:
+    0 0 0 0.18em hsla(228,20%,60%,0.18) inset,
+    0 0.4em 1.5em hsla(228,20%,40%,0.07) inset;
+}
+
+.pl__inner-ring {
+  width: 9em;
+  height: 9em;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  box-shadow:
+    0 0 0 0.18em hsla(228,20%,60%,0.18) inset,
+    0 0.4em 1.5em hsla(228,20%,40%,0.07) inset;
+}
+
+/* track-cover = rotating shadow that gives orbital depth.
+   Same color as bg in front half → transparent → acts as mask for back half */
+.pl__track-cover {
+  width: 13em;
+  height: 13em;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    var(--pl-bg)        0deg  160deg,
+    hsla(228,20%,70%,0.12) 160deg 220deg,
+    hsla(228,20%,55%,0.18) 220deg 280deg,
+    hsla(228,20%,70%,0.10) 280deg 340deg,
+    transparent        340deg 360deg
+  );
+  animation: trackCover 3s linear infinite;
+}
+
+/* snowball: pure white with subtle 3-D shading */
+.pl__ball {
+  width: 3em;
+  height: 3em;
+  background: radial-gradient(
+    circle at 36% 32%,
+    hsl(0,0%,100%)       0%,
+    hsl(228,25%,94%)    45%,
+    hsl(228,18%,82%)    80%,
+    hsl(228,15%,72%)   100%
+  );
+  box-shadow:
+    0 0.15em 0.4em hsla(228,20%,30%,0.22),
+    0 0.05em 0.12em hsla(228,20%,30%,0.15);
+  transform: translate(-50%, -50%) rotate(0deg) translateY(-6.5em);
+  animation: ball 3s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  overflow: hidden;
+}
+
+/* snow texture: faint streaks */
+.pl__ball-texture {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    92deg,
+    hsla(0,0%,100%,0)    0     0.18em,
+    hsla(0,0%,100%,0.22) 0.18em 0.34em
+  );
+  animation: ballTexture 0.15s steps(1, end) infinite;
+}
+
+/* outer rim shadow */
+.pl__ball-outer-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 58% at 61% 44%,
+    hsla(228,20%,50%,0)    49%,
+    hsla(228,20%,50%,0.28) 50%
+  );
+  animation: ballOuterShadow 3s linear infinite;
+}
+
+/* highlight + under-shadow */
+.pl__ball-inner-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle 0.65em at 32% 30%,
+      hsla(0,0%,100%,0.85) 49%,
+      hsla(0,0%,100%,0)    50%
+    ),
+    radial-gradient(
+      ellipse 58% 48% at 63% 65%,
+      hsla(228,18%,55%,0.38) 49%,
+      hsla(228,18%,55%,0)    50%
+    );
+  animation: ballInnerShadow 3s linear infinite;
+}
+
+/* left/right ambient shadow */
+.pl__ball-side-shadows {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    90deg,
+    hsla(228,18%,50%,0.22)  0%,
+    hsla(228,18%,50%,0)     28%,
+    hsla(228,18%,50%,0)     72%,
+    hsla(228,18%,50%,0.22) 100%
+  );
+}
+
+/* ===== LOADING SCREEN ===== */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--pl-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loading-screen-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: hsl(220,40%,30%);
+  letter-spacing: 2px;
+}
+.loading-screen-sub {
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: hsl(220,20%,55%);
+  margin-top: -1.5rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Renk Paleti (Görselden Alınan Referanslar) */
+  --primary:       #f6ad55;   /* Vurgu rengi (turuncu/amber) */
+  --primary-dark:  #dd862d;   /* Vurgu koyu (hover) */
+  --primary-light: #fbd38d;   /* Vurgu açık */
+  
+  --secondary:      #4fd1c5;   /* Logo alt metni (Cyan/Azure) */
+  --secondary-dark: #38b2ac;
+  
+  /* Arka Planlar (Split-Screen Teması) */
+  --bg-dark-navy:  #2d3748;   /* Sörf tarafı koyu navy/gri */
+  --bg-snow-white: #f7fafc;   /* Snowboard tarafı temiz beyaz/gri */
+  
+  /* Fonksiyonel Renkler */
+  --ocean:         var(--secondary); 
+  --ocean-light:   #81e6d9;
+  --ocean-deep:    #285e61;
+  --ocean-dark:    #1a202c;
+
+  --ice:           #ebf8ff;
+  --snow-white:    #ffffff;
+  --mountain:      #2d3748;
+
+  --gold:          var(--primary);
+  --gold-light:    var(--primary-light);
+  --gold-dark:     var(--primary-dark);
+
+  /* Nötr ve Yazı Renkleri */
+  --text-main:     #2d3748;
+  --text-muted:    #718096;
+  --text-on-dark:  #ffffff;
+  
+  --bg-light:      var(--bg-snow-white);
+  --bg-dark:       var(--bg-dark-navy);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  background: #fff;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f0f9ff; }
+::-webkit-scrollbar-thumb { background: var(--ocean); border-radius: 3px; }
