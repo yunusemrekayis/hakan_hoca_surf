@@ -179,22 +179,28 @@ const AppInner: React.FC = () => {
       <section className="hero hero-video">
         {/* Video Arka Plan */}
         <div className="hero-video-bg">
-          <video
-            className="hero-video-el hero-video-left"
-            src="/videos/surf.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-          <video
-            className="hero-video-el hero-video-right"
-            src="/videos/snow.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
+          <div className="hero-split-left">
+            <div className="youtube-bg-container">
+              <iframe 
+                src="https://www.youtube.com/embed/ma67yOdMQfs?autoplay=1&mute=1&loop=1&playlist=ma67yOdMQfs&controls=0&rel=0&showinfo=0" 
+                frameBorder="0" 
+                allow="autoplay; encrypted-media" 
+                allowFullScreen
+                title="Surf Background"
+              ></iframe>
+            </div>
+          </div>
+          <div className="hero-split-right">
+            <div className="youtube-bg-container">
+              <iframe 
+                src="https://www.youtube.com/embed/4xvwbWqUWgI?autoplay=1&mute=1&loop=1&playlist=4xvwbWqUWgI&controls=0&rel=0&showinfo=0" 
+                frameBorder="0" 
+                allow="autoplay; encrypted-media" 
+                allowFullScreen
+                title="Snowboard Background"
+              ></iframe>
+            </div>
+          </div>
           <div className="hero-video-split-line" />
           <div className="hero-video-overlay" />
         </div>
@@ -502,9 +508,8 @@ const AppInner: React.FC = () => {
             <div className="contact-info">
               {[
                 { icon: '📞', label: 'Telefon', value: '+90 536 522 53 00' },
-                { icon: '📧', label: 'E-posta', value: 'hakan@hakanabay.com' },
-                { icon: '📍', label: 'Lokasyon', value: 'Alaçatı / Uludağ' },
-                { icon: '📸', label: 'Instagram', value: '@hakanabay_surf' },
+                { icon: '📧', label: 'E-posta', value: 'abayhakan729@gmail.com' },
+                { icon: '📍', label: 'Lokasyon', value: 'Kocaeli / Kartepe' },
               ].map((c) => (
                 <div className="contact-item" key={c.label}>
                   <div className="contact-icon">{c.icon}</div>

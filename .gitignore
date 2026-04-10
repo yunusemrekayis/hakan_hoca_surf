@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # Large media files (exceeding GitHub's 100MB limit)
-*.mp4
+13155353_2160_3840_60fps.mp4
+public/videos/snow.mp4
